@@ -7,13 +7,6 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 driver = None
 
-
-def pytest_addoption(parser):
-    parser.addoption(
-        "--browser_name", action="store", default="chrome"
-    )
-
-
 @pytest.fixture()
 def setup(request):
     global driver
@@ -21,7 +14,7 @@ def setup(request):
     chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_experimental_option("detach", True)
-    driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe", options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     driver.get("https://sso.eservices.jud.ct.gov/Foreclosures/Public/PendPostbyTownList.aspx")
     driver.implicitly_wait(10)
